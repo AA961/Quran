@@ -12,14 +12,16 @@ const { data: surah, pending } = await useLazyAsyncData('count', () => $fetch(ur
 <template>
     <section>
         <div class="container">
-            <div v-if="pending">Loading...</div>
+            <div v-if="pending">
+                <Loading />
+            </div>
             <div v-else>
                 <h2 class="surah-number">{{ surah.data.number }}.</h2>
                 <h1 class="surah-name">{{ surah.data.name }}</h1>
                 <div class="ayah" v-for="(ayahs, index) in surah.data.ayahs" :key="index">
                     <span class="ayah-number-surah">{{ ayahs.numberInSurah }}.</span>
                     <div class="ayah-text">
-                        <h3>{{ ayahs.text }}</h3>
+                        <p>{{ ayahs.text }}</p>
                     </div>
                     <div class="ayah-details">
                         <span class="ayah-number">Ayah : {{ ayahs.number }}</span>
@@ -50,7 +52,10 @@ const { data: surah, pending } = await useLazyAsyncData('count', () => $fetch(ur
 
     .ayah-text {
         color: var(--accent);
-        font-family: 'Montserrat';
+        font-family: 'Quicksand', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        word-spacing: 4px;
     }
 
     .ayah-number-surah {

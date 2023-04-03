@@ -7,7 +7,9 @@ const { data, pending } = await useLazyAsyncData('count', () => $fetch(url))
     <section>
         <div class="container">
             <h1>Surahs of the Quran</h1>
-            <div v-if="pending">Loading...</div>
+            <div v-if="pending">
+                <Loading />
+            </div>
             <div v-else>
                 <div v-for="(surah, index) in data.data" :key="index">
                     <div class="surah-details">

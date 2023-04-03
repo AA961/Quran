@@ -20,7 +20,7 @@
 h1 {
   font-size: 2rem;
   color: var(--primary);
-  /* font-weight: 600; */
+  font-weight: 600;
 }
 
 body {
