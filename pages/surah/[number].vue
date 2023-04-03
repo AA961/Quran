@@ -1,0 +1,76 @@
+<script setup>
+import { useRoute } from 'vue-router';
+const router = useRoute()
+let surahNumber = router.params.number;
+
+const url = `http://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
+const { data: surah, pending } = await useLazyAsyncData('count', () => $fetch(url))
+
+
+</script>
+
+<template>
+    <section>
+        <div class="container">
+            <div v-if="pending">Loading...</div>
+            <div v-else>
+                <h2 class="surah-number">{{ surah.data.number }}.</h2>
+                <h1 class="surah-name">{{ surah.data.name }}</h1>
+                <div class="ayah" v-for="(ayahs, index) in surah.data.ayahs" :key="index">
+                    <span class="ayah-number-surah">{{ ayahs.numberInSurah }}.</span>
+                    <div class="ayah-text">
+                        <h3>{{ ayahs.text }}</h3>
+                    </div>
+                    <div class="ayah-details">
+                        <span class="ayah-number">Ayah : {{ ayahs.number }}</span>
+                        <span class="surah-ruku">Ruku : {{ ayahs.ruku }}</span>
+                        <span class="juz">Juz : {{ ayahs.juz }}</span>
+                        <span class="manzil">Manzil : {{ ayahs.manzil }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<style lang="scss" scoped>
+.surah-number {
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 8px;
+    margin-left: -4px;
+}
+
+.ayah {
+    display: flex;
+    margin: 2rem auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    .ayah-text {
+        color: var(--accent);
+        font-family: 'Montserrat';
+    }
+
+    .ayah-number-surah {
+        color: var(--accent);
+        font-weight: 600;
+        margin-bottom: 8px;
+        margin-left: -4px;
+    }
+
+    .ayah-details {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+
+        span {
+            display: block;
+            margin-left: 1rem;
+            margin-top: 1rem;
+        }
+    }
+}
+</style>
