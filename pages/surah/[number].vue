@@ -4,9 +4,34 @@ const router = useRoute()
 let surahNumber = router.params.number;
 
 const url = `http://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
-const { data: surah, pending } = await useLazyAsyncData('count', () => $fetch(url))
+const { data: surah, pending } = await useFetch(url)
+
+let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`)
 
 
+useHead({
+    title: surahName,
+    meta: [
+        {
+            name: 'description',
+            content: 'Al-Quran Online is a free website that allows you to read, listen to, and explore the Quran. Discover its teachings, learn the Arabic language, and deepen your understanding of Islam.'
+        },
+        {
+            name: 'keywords',
+            content: "Quran, Al-Quran , online Quran , Quran reading, Quran listening, Quran exploration, Islamic teachings, Arabic language, Islamic studies"
+        },
+        {
+            name: "content-language",
+            lang: 'eng'
+        }
+    ],
+    links: [
+        {
+            rel: 'icon',
+            href: '/epk.ico'
+        }
+    ]
+})
 </script>
 
 <template>
