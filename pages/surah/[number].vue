@@ -6,11 +6,11 @@ let surahNumber = router.params.number;
 const url = `http://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
 const { data , pending } = await useFetch(url)
 
-// let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`)
+let surahName = ref(`${data.value.data.englishName} - ${data.value.data.name}`)
 
 
 useHead({
-    title: "ihf",
+    title: surahName,
     meta: [
         {
             name: 'description',
@@ -31,10 +31,10 @@ useHead({
 <template>
     <section>
         <div class="container">
-            <div v-if="pending">
+            <!-- <div v-if="pending">
                 <Loading />
-            </div>
-            <div v-else>
+            </div> -->
+            <div>
                 <h2 class="surah-number">{{ data.data.number }}.</h2>
                 <h1 class="surah-name">{{ data.data.name }}</h1>
                 <div class="ayah" v-for="(ayahs, index) in data.data.ayahs" :key="index">
