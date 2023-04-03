@@ -3,8 +3,8 @@ import { useRoute } from 'vue-router';
 const router = useRoute()
 let surahNumber = router.params.number;
 
-const url = `http://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
-const { data } = await useFetch(url)
+const url = `https://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
+const { data, pending } = await useFetch(url)
 
 let surahName = ref(`${data.value.data.englishName} - ${data.value.data.name}`)
 
@@ -31,9 +31,9 @@ useHead({
 <template>
     <section>
         <div class="container">
-            <!-- <div v-if="pending">
+            <div v-if="pending">
                 <Loading />
-            </div> -->
+            </div>
             <div>
                 <h2 class="surah-number">{{ data.data.number }}.</h2>
                 <h1 class="surah-name">{{ data.data.name }}</h1>

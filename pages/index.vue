@@ -1,6 +1,6 @@
 <script setup>
 import fav from '../assets/imgs/quran.ico'
-const url = "http://api.alquran.cloud/v1/surah"
+const url = "https://api.alquran.cloud/v1/surah"
 const { data, pending } = await useLazyAsyncData('count', () => $fetch(url))
 
 useHead({
