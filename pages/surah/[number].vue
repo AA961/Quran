@@ -14,7 +14,7 @@ useHead({
     meta: [
         {
             name: 'description',
-            content: 'Al-Quran Online is a free website that allows you to read, listen to, and explore the Quran. Discover its teachings, learn the Arabic language, and deepen your understanding of Islam.'
+            content: 'Al-Quran Online is a free website that allows you to read, listen to, and explore the Quran. Discover its teachings, learn the Arabic language, and deepen your understanding of Islam'
         },
         {
             name: 'keywords',
