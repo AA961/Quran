@@ -4,7 +4,7 @@ const router = useRoute()
 let surahNumber = router.params.number;
 
 const url = `http://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
-const { data: surah, pending } = await useFetch(url)
+const { data , pending } = await useFetch(url)
 
 // let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`)
 
@@ -35,9 +35,9 @@ useHead({
                 <Loading />
             </div>
             <div v-else>
-                <h2 class="surah-number">{{ surah.data.number }}.</h2>
-                <h1 class="surah-name">{{ surah.data.name }}</h1>
-                <div class="ayah" v-for="(ayahs, index) in surah.data.ayahs" :key="index">
+                <h2 class="surah-number">{{ data.data.number }}.</h2>
+                <h1 class="surah-name">{{ data.data.name }}</h1>
+                <div class="ayah" v-for="(ayahs, index) in data.data.ayahs" :key="index">
                     <span class="ayah-number-surah">{{ ayahs.numberInSurah }}.</span>
                     <div class="ayah-text">
                         <p>{{ ayahs.text }}</p>
