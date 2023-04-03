@@ -25,12 +25,6 @@ useHead({
             lang: 'eng'
         }
     ],
-    links: [
-        {
-            rel: 'icon',
-            href: '/epk.ico'
-        }
-    ]
 })
 </script>
 
