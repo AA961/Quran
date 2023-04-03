@@ -4,13 +4,13 @@ const router = useRoute()
 let surahNumber = router.params.number;
 
 const url = `http://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`
-const { data: surah, pending } = await useLazyAsyncData('count', () => $fetch(url))
+const { data: surah, pending } = await useFetch(url)
 
-let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`)
+// let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`)
 
 
 useHead({
-    title: surahName,
+    title: "ihf",
     meta: [
         {
             name: 'description',
