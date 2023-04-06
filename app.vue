@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css?family=Cairo');
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap');
 :root {
   --primary: #402e32;
   --secondary: #B87333;
@@ -48,7 +48,7 @@ section {
   margin: 0 auto;
 
   @media (max-width: 414px) {
-    padding: 0 4px;
+    padding: 4px;
   }
 
   @media (min-width: 992px) {

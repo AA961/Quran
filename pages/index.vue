@@ -31,7 +31,7 @@ useHead({
 <template>
     <section>
         <div class="container">
-            <h1>Surahs of the Quran</h1>
+            <h1>Quran Majeed</h1>
             <div v-if="pending">
                 <Loading />
             </div>
@@ -54,6 +54,10 @@ useHead({
 </template>
 
 <style lang="scss" scoped >
+.container {
+    padding: 2rem;
+}
+
 .surah-details {
     display: flex;
     margin: 2rem auto;
