@@ -1,31 +1,10 @@
 <script setup>
-import fav from '../assets/imgs/quran.ico'
 const url = "https://api.alquran.cloud/v1/surah"
 const { data, pending } = await useLazyAsyncData('count', () => $fetch(url))
 
-useHead({
-    title: " Al-Quran Online - Read, Listen, and Explore the Quran",
-    meta: [
-        {
-            name: 'description',
-            content: 'Al-Quran Online is a free website that allows you to read, listen to, and explore the Quran. Discover its teachings, learn the Arabic language, and deepen your understanding of Islam.'
-        },
-        {
-            name: 'keywords',
-            content: "Quran, Al-Quran , online Quran , Quran reading, Quran listening, Quran exploration, Islamic teachings, Arabic language, Islamic studies"
-        },
-        {
-            name: "content-language",
-            lang: 'eng'
-        }
-    ],
-    links: [
-        {
-            rel: 'icon',
-            href: fav
-        }
-    ]
-})
+// useHead({
+  
+// })
 </script>
   
 <template>

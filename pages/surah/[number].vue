@@ -16,6 +16,8 @@ let isTranslations = ref(false);
 let urduTranslation = ref(null);
 async function showTranslations() {
 
+    urduTranslation.value = null
+    
     if (selectTranslation.value == "urdu") {
         const { data: translation } = await useFetch(urduTranslationApi)
         urduTranslation.value = translation.value
@@ -54,12 +56,13 @@ useHead({
                 <Loading />
             </div>
             <div>
+                <!-- <button @click="showTranslations">Show</button> -->
                 <div class="translation-menu">
-                    <select name="" id="" v-model="selectTranslation">
+                    <select name="" id="" v-model="selectTranslation" @change="showTranslations()">
                         <option value="" disabled selected>Translation</option>
-                        <option value="urdu" @click="showTranslations">Urdu</option>
-                        <option value="english" @click="showTranslations">English</option>
-                        <option value="english" @click="isTranslations = false">None</option>
+                        <option value="urdu">Urdu</option>
+                        <option value="english">English</option>
+                        <option @click="isTranslations = false">None</option>
                     </select>
                 </div>
                 <h2 class="surah-number">{{ surah.data.number }}.</h2>
@@ -135,7 +138,7 @@ useHead({
         word-spacing: 4px;
 
         p {
-            font-family: 'Amiri', sans-serif !important;
+            font-family: 'noorehira', sans-serif !important;
             text-align: end;
         }
     }
