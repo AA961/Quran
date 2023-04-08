@@ -55,6 +55,7 @@ function playAudio(ayahNumber, index) {
         // Add an event listener to set isPlayAudio to false when the audio playback ends
         audio.addEventListener('ended', () => {
             isPlayAudio.value = false;
+            ayah.playing = true;
         });
     }
 }
