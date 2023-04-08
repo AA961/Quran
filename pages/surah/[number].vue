@@ -1,5 +1,4 @@
 <script setup>
-import { useRoute } from 'vue-router';
 const router = useRoute()
 let surahNumber = router.params.number;
 
@@ -8,27 +7,71 @@ const englishTranslationApi = `https://api.alquran.cloud/v1/surah/${surahNumber}
 const url = `https://api.alquran.cloud/v1/surah/${surahNumber}`
 const { data: surah, pending } = await useFetch(url)
 
+
 let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`);
 
+surah.value.data.ayahs.forEach((ayah) => {
+    ayah.playing = false
+})
 let selectTranslation = ref("");
 
 let isTranslations = ref(false);
 let urduTranslation = ref(null);
+
+let isPlayAudio = ref(false);
 async function showTranslations() {
 
     urduTranslation.value = null
-    
+
     if (selectTranslation.value == "urdu") {
-        const { data: translation } = await useFetch(urduTranslationApi)
+        const { data: translation } = await useLazyFetch(urduTranslationApi)
         urduTranslation.value = translation.value
         isTranslations.value = true
     } else if (selectTranslation.value == "english") {
-        const { data: translation } = await useFetch(englishTranslationApi)
+        const { data: translation } = await useLazyFetch(englishTranslationApi)
         urduTranslation.value = translation.value
         isTranslations.value = true
     }
 
 }
+
+let audio = null;
+
+function playAudio(ayahNumber, index) {
+    const ayah = surah.value.data.ayahs[index];
+    if (isPlayAudio.value == true) {
+        if (audio !== null) {
+            // Pause and reset the current audio playback
+            audio.pause();
+            audio.currentTime = 0;
+        }
+        ayah.playing = true;
+
+        // Create a new Audio object and play it
+        audio = new Audio(`https://cdn.islamic.network/quran/audio/128/ar.alafasy/${ayahNumber}.mp3`);
+        audio.play();
+
+
+        // Add an event listener to set isPlayAudio to false when the audio playback ends
+        audio.addEventListener('ended', () => {
+            isPlayAudio.value = false;
+        });
+    }
+}
+
+
+// Add a watcher to the isPlayAudio.value reactive variable
+watch(isPlayAudio, (newVal, oldVal) => {
+    if (newVal === false && oldVal === true) {
+        // Pause and reset the current audio playback
+        if (audio !== null) {
+            audio.pause();
+            // audio.currentTime = 0;
+        }
+    }
+});
+
+
 
 useHead({
     title: surahName,
@@ -69,6 +112,14 @@ useHead({
                 <h1 class="surah-name">{{ surah.data.name }}</h1>
                 <div class="ayah" v-for="(ayahs, index) in surah.data.ayahs" :key="index">
                     <span class="ayah-number-surah">{{ ayahs.numberInSurah }}.</span>
+                    <span class="play" v-if="!ayahs.playing" @click="isPlayAudio = true, playAudio(ayahs.number, index)">
+                        <IconsPlay />
+                    </span>
+                    <span class="play" v-else
+                        @click="isPlayAudio = false, ayahs.playing = false, playAudio(ayahs.number, index)">
+                        <IconsPause />
+                    </span>
+
                     <div class="ayah-text">
                         <p>{{ ayahs.text }}</p>
                     </div>

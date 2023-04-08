@@ -19,11 +19,7 @@ export default defineNuxtConfig({
                 { rel: 'icon', href: 'imgs/quran.ico' }
             ],
 
-            // link: [
-            // <link rel="stylesheet" href="https://myawesome-lib.css">
-            // { rel: 'stylesheet', href: 'https://awesome-lib.css' }
-            // ],
-            // please note that this is an area that is likely to change
+            
             style: [
                 // <style type="text/css">:root { color: red }</style>
             ],
