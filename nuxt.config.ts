@@ -16,7 +16,11 @@ export default defineNuxtConfig({
             ],
             link: [
                 { rel: 'stylesheet', href: 'fonts/noorehira.ttf' },
-                { rel: 'icon', href: 'imgs/quran.ico' }
+                { rel: 'icon', href: 'imgs/quran.ico' },
+                { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css' },
+
+
+                
             ],
 
             

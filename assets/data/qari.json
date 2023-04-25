@@ -1,0 +1,132 @@
+[
+    {
+        "name": "Abdul Basit",
+        "iden": "ar.abdulbasitmurattal",
+        "bitRate": "192"
+    },
+    {
+        "name": "Abdullah Basfar",
+        "iden": "ar.abdullahbasfar",
+        "bitRate": "192"
+    },
+    {
+        "name": "Abdurrahmaan As-Sudais",
+        "iden": "ar.abdurrahmaansudais",
+        "bitRate": "64"
+    },
+    {
+        "name": "Abdul Samad",
+        "iden": "ar.abdulsamad",
+        "bitRate": "64"
+    },
+    {
+        "name": "Abu Bakr Ash-Shaatree",
+        "iden": "ar.shaatree",
+        "bitRate": "128"
+    },
+    {
+        "name": "Ahmed ibn Ali al-Ajamy",
+        "iden": "ar.ahmedajamy",
+        "bitRate": "128"
+    },
+    {
+        "name": "Alafasy",
+        "iden": "ar.alafasy",
+        "bitRate": "128"
+    },
+    {
+        "name": "Hani Rifai",
+        "iden": "ar.hanirifai",
+        "bitRate": "192"
+    },
+    {
+        "name": "Husary",
+        "iden": "ar.husary",
+        "bitRate": "128"
+    },
+    {
+        "name": "Husary (Mujawwad)",
+        "iden": "ar.husarymujawwad",
+        "bitRate": "128"
+    },
+    {
+        "name": "Hudhaify",
+        "iden": "ar.hudhaify",
+        "bitRate": "128"
+    },
+    {
+        "name": "Ibrahim Akhdar",
+        "iden": "ar.ibrahimakhbar",
+        "bitRate": "32"
+    },
+    {
+        "name": "Maher Al Muaiqly",
+        "iden": "ar.mahermuaiqly",
+        "bitRate": "128"
+    },
+    {
+        "name": "Minshawy (Mujawwad)",
+        "iden": "ar.minshawimujawwad",
+        "bitRate": "64"
+    },
+    {
+        "name": "Minshawi",
+        "iden": "ar.minshawi",
+        "bitRate": "128"
+    },
+    {
+        "name": "Muhammad Ayyoub",
+        "iden": "ar.muhammadayyoub",
+        "bitRate": "128"
+    },
+    {
+        "name": "Muhammad Jibreel",
+        "iden": "ar.muhammadjibreel",
+        "bitRate": "128"
+    },
+    {
+        "name": "Saood bin Ibraaheem Ash-Shuraym",
+        "iden": "ar.saoodshuraym",
+        "bitRate": "64"
+    },
+    {
+        "name": "Ibrahim Walk",
+        "iden": "en.walk",
+        "bitRate": "192"
+    },
+    {
+        "name": "Fooladvand - Hedayatfar",
+        "iden": "fa.hedayatfarfooladvand",
+        "bitRate": "40"
+    },
+    {
+        "name": "Parhizgar",
+        "iden": "ar.parhizgar",
+        "bitRate": "48"
+    },
+    {
+        "name": "Shamshad Ali Khan",
+        "iden": "ur.khan",
+        "bitRate": "64"
+    },
+    {
+        "name": "Chinese",
+        "iden": "zh.chinese",
+        "bitRate": "128"
+    },
+    {
+        "name": "Youssouf Leclerc",
+        "iden": "fr.leclerc",
+        "bitRate": "128"
+    },
+    {
+        "name": "Ayman Sowaid",
+        "iden": "ar.aymanswoaid",
+        "bitRate": "64"
+    },
+    {
+        "name": "Elmir Kuliev by 1MuslimApp",
+        "iden": "ru.kuliev-audio",
+        "bitRate": "128"
+    }
+]
