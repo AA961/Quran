@@ -26,7 +26,7 @@
 
 @font-face {
   font-family: 'ar-ALHAWE_QURAN';
-  src: url('@/assets/fonts/DecoType\ Thuluth\ Regular.ttf') format('truetype');
+  src: url('@/assets/fonts/DecoType-Thuluth-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

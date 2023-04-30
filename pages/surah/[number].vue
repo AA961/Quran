@@ -523,6 +523,7 @@ input[type="checkbox"]:checked::before {
     text-align: right;
     margin-right: 1rem;
     font-size: 3rem;
+    font-family: 'ar-ALHAWE_QURAN';
 }
 
 .ayah {
