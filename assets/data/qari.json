@@ -1,9 +1,24 @@
 [
     {
+        "name": "Alafasy",
+        "iden": "ar.alafasy",
+        "bitRate": "128"
+    },
+    {
+        "name": "Ibrahim Walk (English)",
+        "iden": "en.walk",
+        "bitRate": "192"
+    },
+    {
+        "name": "Shamshad Ali Khan (Urdu)",
+        "iden": "ur.khan",
+        "bitRate": "64"
+    },
+    {
         "name": "Abdul Basit",
         "iden": "ar.abdulbasitmurattal",
         "bitRate": "192"
-    },
+    },   
     {
         "name": "Abdullah Basfar",
         "iden": "ar.abdullahbasfar",
@@ -27,11 +42,6 @@
     {
         "name": "Ahmed ibn Ali al-Ajamy",
         "iden": "ar.ahmedajamy",
-        "bitRate": "128"
-    },
-    {
-        "name": "Alafasy",
-        "iden": "ar.alafasy",
         "bitRate": "128"
     },
     {
@@ -90,11 +100,6 @@
         "bitRate": "64"
     },
     {
-        "name": "Ibrahim Walk",
-        "iden": "en.walk",
-        "bitRate": "192"
-    },
-    {
         "name": "Fooladvand - Hedayatfar",
         "iden": "fa.hedayatfarfooladvand",
         "bitRate": "40"
@@ -103,11 +108,6 @@
         "name": "Parhizgar",
         "iden": "ar.parhizgar",
         "bitRate": "48"
-    },
-    {
-        "name": "Shamshad Ali Khan",
-        "iden": "ur.khan",
-        "bitRate": "64"
     },
     {
         "name": "Chinese",

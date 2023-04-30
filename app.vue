@@ -17,6 +17,21 @@
   --light: #f69333;
 }
 
+@font-face {
+  font-family: 'Noorehira';
+  src: url('@/assets/fonts/noorehira.ttf') format('truetype');
+
+
+}
+
+@font-face {
+  font-family: 'ar-ALHAWE_QURAN';
+  src: url('@/assets/fonts/DecoType\ Thuluth\ Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 
 h1 {
   font-size: 2rem;
@@ -73,5 +88,22 @@ section {
   @media (min-width: 1200px) {
     max-width: 1152px;
   }
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide-right-enter,
+.slide-left-leave-to {
+  transform: translateX(100%);
+}
+
+.slide-right-leave-to,
+.slide-left-enter {
+  transform: translateX(-100%);
 }
 </style>

@@ -8,23 +8,37 @@ const englishTranslationApi = `https://api.alquran.cloud/v1/surah/${surahNumber}
 const url = `https://api.alquran.cloud/v1/surah/${surahNumber}`
 const { data: surah, pending } = await useFetch(url)
 
+let urduTranslation = ref(null);
+let isTranslations = ref(false);
+let loadingTranslations = ref(true);
+
+
+
+
+const { data: translation, pending: loadingTrans } = await useFetch(urduTranslationApi)
+urduTranslation.value = translation.value
+isTranslations.value = true
+loadingTranslations.value = false
+
+
+
+
 
 let surahName = ref(`${surah.value.data.englishName} - ${surah.value.data.name}`);
+let autoPlay = ref(true);
+let showMenu = ref(false)
 
 surah.value.data.ayahs.forEach((ayah) => {
     ayah.playing = false
     ayah.loadingAudio = false
 })
-let selectTranslation = ref("");
-let isTranslations = ref(false);
-let urduTranslation = ref(null);
+let selectTranslation = ref("urdu");
 let isPlayAudio = ref(false);
-let showDetails = ref(true);
-let loadingTranslations = ref(false);
+let showDetails = ref(false);
 let selectedRecitation = ref("128/ar.alafasy");
 async function showTranslations() {
-
-    urduTranslation.value = null
+    // urduTranslation.value = null
+    isTranslations.value = false
     loadingTranslations.value = true
 
     if (selectTranslation.value == "urdu") {
@@ -44,6 +58,10 @@ async function showTranslations() {
     }
 
 }
+
+onMounted(() => {
+    // showTranslations()
+})
 
 let audio = null;
 
@@ -65,7 +83,6 @@ async function playAudio(ayahNumber, index) {
             // Pause and reset the current audio playback
             audio.pause();
             audio.currentTime = 0;
-            // loadingAudio.value = false;
 
         }
 
@@ -79,8 +96,16 @@ async function playAudio(ayahNumber, index) {
 
         // Add an event listener to set isPlayAudio to false when the audio playback ends
         audio.addEventListener('ended', () => {
-            isPlayAudio.value = false;
-            ayah.playing = false;
+
+            if (autoPlay.value == true && index < surah.value.data.ayahs.length - 1) {
+                ayahNumber++;
+                index++;
+                playAudio(ayahNumber, index)
+            } else {
+                isPlayAudio.value = false;
+                ayah.playing = false;
+
+            }
             // loadingAudio.value = false;
 
         });
@@ -130,11 +155,12 @@ useHead({
 </script>
 
 <template>
-    <section>
-        <div class="menu">
+    <transition name="menu" mode="out-in">
+        <div class="menu" v-if="showMenu">
             <div class="translation-menu">
-                <select name="" id="" v-model="selectTranslation" @change="showTranslations()">
-                    <option value="" disabled selected>Translation</option>
+                <label for="selectTranslation">Translation</label>
+                <select name="" id="selectTranslation" v-model="selectTranslation" @change="showTranslations()">
+                    <!-- <option value="" disabled selected>Translation</option> -->
                     <option value="urdu">Urdu</option>
                     <option value="english">English</option>
                     <option value="none">None</option>
@@ -142,8 +168,9 @@ useHead({
             </div>
 
             <div class="recitation-menu">
-                <select v-model="selectedRecitation">
-                    <option disabled selected>Recitation</option>
+                <label for="selectRecitation">Recitation</label>
+                <select v-model="selectedRecitation" id="selectRecitation">
+                    <!-- <option disabled selected>Recitation</option> -->
                     <option v-for="q in qari" :value="q.bitRate + '/' + q.iden">{{ q.name }}</option>
                 </select>
             </div>
@@ -151,10 +178,37 @@ useHead({
                 <label for="show-details">Details</label>
                 <input type="checkbox" name="" id="show-details" v-model="showDetails">
             </div>
+            <div class="show-details">
+                <label for="show-details">Autoplay</label>
+                <input type="checkbox" name="" id="show-details" v-model="autoPlay">
+            </div>
 
 
 
         </div>
+
+
+    </transition>
+
+    <div class="menu-toggle-wrapper">
+        <div class="menu-toggle" @click="showMenu = !showMenu">
+            <span class="bar"></span>
+            <!-- <span class="arrow"></span> -->
+            <!-- <i class="fas fa-sort-down arrow"></i> -->
+            <span class="option" v-if="!showMenu">
+                Options
+            </span>
+
+            <span class="option" v-else>
+                Close
+            </span>
+        </div>
+    </div>
+    <section>
+
+
+
+
         <div class="container">
             <div v-if="pending">
                 <Loading />
@@ -177,15 +231,22 @@ useHead({
 
                     </span>
 
+                    <div v-show="!showDetails" class="ayah-numbering">
+                        <span>{{ surah.data.number }} : {{ index + 1 }}</span>
+                    </div>
+
                     <div class="ayah-text">
-                        <p>{{ ayahs.text }}</p>
+                        <p>
+                            {{ ayahs.text }}
+                        </p>
+
                     </div>
                     <div v-if="loadingTranslations" class="loading-translations w-100 flex-center">
                         <i class="fa fa-spinner"></i>
 
                     </div>
                     <div v-else>
-                        <div v-if="isTranslations && selectTranslation == 'urdu'" class="ayah-urdu-translation">
+                        <div v-if="!loadingTrans && selectTranslation == 'urdu'" class="ayah-urdu-translation">
                             <p>{{ urduTranslation.data.ayahs[index].text }}</p>
                         </div>
 
@@ -195,12 +256,14 @@ useHead({
 
                     </div>
 
-                    <div class="ayah-details" v-if="showDetails">
+                    <div class="ayah-details" v-show="showDetails">
                         <span class="ayah-number">Ayah : {{ ayahs.number }}</span>
                         <span class="surah-ruku">Ruku : {{ ayahs.ruku }}</span>
                         <span class="juz">Juz : {{ ayahs.juz }}</span>
                         <span class="manzil">Manzil : {{ ayahs.manzil }}</span>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -211,6 +274,7 @@ useHead({
 .container {
     padding: 2rem;
 }
+
 
 .loading-translations {
     color: var(--primary);
@@ -238,45 +302,210 @@ useHead({
     }
 }
 
-.menu {
+
+.menu-toggle-wrapper {
+    width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    width: 100vw;
-    border-bottom: 2px solid var(--primary);
-    padding-bottom: 1rem;
-    flex-wrap: wrap;
-    div{
-        margin: 0.3rem;
-    }
+    // margin-top: -2.8rem;
 
-    .translation-menu,
-    .recitation-menu {
-        select {
-            padding: 6px;
-            font-size: 1rem;
-            cursor: pointer;
-            outline: none;
-            border: none;
-            border-bottom: 6px;
-            background: var(--primary);
-            color: var(--accent);
-            border-radius: 10px;
-        }
-    }
+    // img {
+    //     width: 100px;
+    //     height: 70px;
+    //     position: absolute;
+    //     top: -12px;
 
-    .show-details {
+    //     @media (max-width: 850px) {
+    //         height: 50px;
+    //         width: 15px;
+    //     }
+    // }
+}
+
+.menu-toggle {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    // margin-top: -2.8rem;
+
+    span.option {
+        padding: 0.6rem 0.5rem 0.4rem 0.5rem;
+
+        // border: 1px solid var(--accent);
+        background: var(--primary);
+        color: var(--accent);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        font-weight: 600;
+        z-index: 2;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: var(--primary);
-        color: var(--accent);
-        border-radius: 10px;
-        padding: 0rem 0.4rem;
+    }
 
-        label {
-            margin: 0.4rem;
+}
+
+.menu-toggle .bar {
+    position: absolute;
+    top: 3;
+
+    // top: 13px;
+    width: 100%;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+    transition: all 0.2s ease-in-out;
+    z-index: 1;
+}
+
+.menu-toggle .arrow {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.menu-toggle.active .bar {
+    transform: rotate(45deg);
+    background-color: #fff;
+}
+
+.menu-toggle.active .arrow {
+    transform: rotate(-135deg);
+    border-color: #fff;
+}
+
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+    cursor: pointer;
+    position: relative;
+    top: 2px;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 12px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding: 0 20px;
+    position: relative;
+    background: var(--primary);
+    flex-wrap: wrap;
+    top: 0;
+
+    @media (max-width: 850px) {
+        flex-direction: column;
+        height: 200px;
+        justify-content: center;
+        align-items: flex-start;
+
+
+    }
+
+    div {
+        @media (max-width: 850px) {
+            margin: auto 2rem;
         }
+    }
+
+    label {
+        color: var(--accent);
+        margin-right: 1rem;
+        font-size: 1.1rem;
+
+
+    }
+
+    #selectRecitation {
+        @media (max-width: 850px) {
+            margin-top: 1rem;
+        }
+    }
+}
+
+.menu-enter-active {
+    animation: slide-down 0.3s;
+}
+
+.menu-leave-active {
+    animation: slide-up 0.3s;
+}
+
+.translation-menu select,
+.recitation-menu select {
+    // border: none;
+    // background: none;
+    color: var(--accent);
+    background: var(--primary);
+    padding: 0rem 0.4rem;
+    font-size: 14px;
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+}
+
+.translation-menu select:focus,
+.recitation-menu select:focus {
+    outline: none;
+}
+
+// .translation-menu::after,
+// .recitation-menu::after {
+//     content: "\f107";
+//     font-family: "Font Awesome 5 Free";
+//     font-weight: 900;
+//     color: #fff;
+//     margin-left: 10px;
+//     font-size: 14px;
+// }
+
+.show-details input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
     }
 }
 
@@ -310,9 +539,13 @@ useHead({
         word-spacing: 4px;
 
         p {
-            font-family: 'noorehira', sans-serif !important;
-            text-align: end;
+            font-family: 'Noorehira', sans-serif;
+            direction: rtl;
+            position: relative;
+
         }
+
+
     }
 
     .ayah-urdu-translation {
@@ -353,6 +586,19 @@ useHead({
         font-weight: 600;
         margin-bottom: 8px;
         margin-left: -4px;
+    }
+
+    .ayah-numbering {
+        width: 100%;
+        display: flex;
+
+        span {
+            border: 1px solid var(--primary);
+            padding: 0.1rem 0.2rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
     }
 
     .ayah-details {

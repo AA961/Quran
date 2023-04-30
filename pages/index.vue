@@ -2,12 +2,10 @@
 const url = "https://api.alquran.cloud/v1/surah"
 const { data, pending } = await useLazyAsyncData('count', () => $fetch(url))
 const surahClass = (surah) => {
-  return surah.revelationType == 'Meccan' ? 'surah-details makki' : 'surah-details madni';
+    return surah.revelationType == 'Meccan' ? 'surah-details makki' : 'surah-details madni';
 }
 
-// useHead({
-  
-// })
+
 </script>
   
 <template>
@@ -19,58 +17,65 @@ const surahClass = (surah) => {
                 <Loading />
             </div>
             <div v-else class="w-100">
-              
-                <div v-for="(surah, index) in data.data" :key="index"  class="w-100">
-    <div :class="surahClass(surah)" class="w-100">
-        <nuxt-link :to="'/surah/' + surah.number" class="surah-name">
-        <div class="surah-background"></div>
-    </nuxt-link>
-      <span class="surah-number">{{ surah.number }}.</span>
-        <h2>{{ surah.name }}</h2>
-      <h3>{{ surah.englishName }}</h3>
-      <p class="name-meaning">{{ surah.englishNameTranslation }}</p>
-      <span class="total-ayah">{{ surah.numberOfAyahs }}</span>
-      <span class="revelation-type">{{ surah.revelationType }}</span>
-    </div>
-  </div>
+
+                <div v-for="(surah, index) in data.data" :key="index" class="w-100">
+                    <div :class="surahClass(surah)" class="w-100">
+                        <nuxt-link :to="'/surah/' + surah.number" class="surah-name">
+                            <div class="surah-background"></div>
+                        </nuxt-link>
+                        <div class="inner">
+                            <span class="surah-number">{{ surah.number }}.</span>
+                            <div class="right">
+                                <h2>{{ surah.name.replace(/^سُورَةُ /, '') }}</h2>
+                            </div>
+                            <div class="left">
+                                <h3>{{ surah.englishName }}</h3>
+                                <p class="name-meaning">{{ surah.englishNameTranslation }}</p>
+                                <span class="total-ayah">{{ surah.numberOfAyahs }}</span>
+                                <span class="revelation-type">{{ surah.revelationType }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 </template>
 
 <style lang="scss" scoped >
-.head-img{
+.head-img {
     width: 60%;
 }
- .madni {
+
+.madni {
     background-color: black;
     color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  }
-  
-  /* Makki Surahs */
-  .makki {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Makki Surahs */
+.makki {
     background-color: black;
     color: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.5);
-  }
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
 
-  .surah-background {
-  position: absolute;
-  border-radius: 10px;
+.surah-background {
+    position: absolute;
+    border-radius: 10px;
 
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.5;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.5;
 }
 
 .makki .surah-background {
@@ -83,9 +88,11 @@ const surahClass = (surah) => {
 
 .madni .surah-background {
     background-repeat: no-repeat;
-background-size: cover;
+    background-size: cover;
     background: linear-gradient(rgba(56, 199, 9, 0.3), rgba(7, 182, 53, 0.7)),
-        url('@/assets/imgs/madina.jpg');}
+        url('@/assets/imgs/madina.jpg');
+}
+
 .container {
     padding: 2rem;
     display: flex;
@@ -96,24 +103,64 @@ background-size: cover;
 }
 
 .surah-details {
-    display: flex;
+    // display: flex;
     margin: 2rem auto;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    // flex-direction: column;
+    // justify-content: center;
+    // align-items: flex-start;
     position: relative;
+    display: flex;
+    width: 100%;
+    height: 170px;
+
+    .inner {
+        display: flex;
+        width: 100%;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+        // .right{
+        //     flex: 2;
+        // }
+        .left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+        }
+    }
 
     .surah-name {
         // font-family: 'Cairo', sans-serif;
         color: var(--accent);
-        font-family: 'Amiri', serif;
+        // font-family: 'Amiri', serif;
 
         cursor: pointer;
         text-decoration: none;
     }
 
-    .surah-number {
-        color: var(--accent);
+
+}
+
+.surah-number {
+    color: var(--accent);
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+
+h2 {
+    font-family: 'ar-ALHAWE_QURAN';
+    font-size: 4rem;
+    margin-top: 1rem;
+    // margin-bottom: 1rem;
+
+
+    @media (max-width: 500px) {
+        font-size: 3rem;
+        margin-top: 3rem;
+
     }
 }
 </style>
