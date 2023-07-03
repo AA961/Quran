@@ -8,17 +8,18 @@ const englishTranslationApi = `https://api.alquran.cloud/v1/surah/${surahNumber}
 const url = `https://api.alquran.cloud/v1/surah/${surahNumber}`
 const { data: surah, pending } = await useFetch(url)
 
-let urduTranslation = ref(null);
-let isTranslations = ref(false);
-let loadingTranslations = ref(true);
+const urduTranslation = ref(null);
+const isTranslations = ref(false);
+const loadingTranslations = ref(false);
+const isMobile = ref(false)
 
 
 
 
-const { data: translation, pending: loadingTrans } = await useFetch(urduTranslationApi)
-urduTranslation.value = translation.value
-isTranslations.value = true
-loadingTranslations.value = false
+// const { data: translation, pending: loadingTrans } = await useFetch(urduTranslationApi)
+// urduTranslation.value = translation.value
+// isTranslations.value = true
+// loadingTranslations.value = false
 
 
 
@@ -32,7 +33,7 @@ surah.value.data.ayahs.forEach((ayah) => {
     ayah.playing = false
     ayah.loadingAudio = false
 })
-let selectTranslation = ref("urdu");
+let selectTranslation = ref("");
 let isPlayAudio = ref(false);
 let showDetails = ref(false);
 let selectedRecitation = ref("128/ar.alafasy");
@@ -60,7 +61,8 @@ async function showTranslations() {
 }
 
 onMounted(() => {
-    // showTranslations()
+
+    window.innerWidth < 855 ? isMobile.value = true : isMobile.value = false;
 })
 
 let audio = null;
@@ -156,7 +158,7 @@ useHead({
 
 <template>
     <transition name="menu" mode="out-in">
-        <div class="menu" v-if="showMenu">
+        <div class="menu" v-if="showMenu || !isMobile">
             <div class="translation-menu">
                 <label for="selectTranslation">Translation</label>
                 <select name="" id="selectTranslation" v-model="selectTranslation" @change="showTranslations()">
@@ -195,11 +197,11 @@ useHead({
             <span class="bar"></span>
             <!-- <span class="arrow"></span> -->
             <!-- <i class="fas fa-sort-down arrow"></i> -->
-            <span class="option" v-if="!showMenu">
+            <span class="option" v-if="isMobile && !showMenu">
                 Options
             </span>
 
-            <span class="option" v-else>
+            <span class="option" v-if="showMenu && isMobile">
                 Close
             </span>
         </div>
@@ -231,7 +233,7 @@ useHead({
 
                     </span>
 
-                    <div v-show="!showDetails" class="ayah-numbering">
+                    <div class="ayah-numbering">
                         <span>{{ surah.data.number }} : {{ index + 1 }}</span>
                     </div>
 
@@ -246,7 +248,7 @@ useHead({
 
                     </div>
                     <div v-else>
-                        <div v-if="!loadingTrans && selectTranslation == 'urdu'" class="ayah-urdu-translation">
+                        <div v-if="!loadingTranslations && selectTranslation == 'urdu'" class="ayah-urdu-translation">
                             <p>{{ urduTranslation.data.ayahs[index].text }}</p>
                         </div>
 
@@ -256,7 +258,7 @@ useHead({
 
                     </div>
 
-                    <div class="ayah-details" v-show="showDetails">
+                    <div class="ayah-details" v-if="showDetails">
                         <span class="ayah-number">Ayah : {{ ayahs.number }}</span>
                         <span class="surah-ruku">Ruku : {{ ayahs.ruku }}</span>
                         <span class="juz">Juz : {{ ayahs.juz }}</span>
@@ -415,7 +417,7 @@ input[type="checkbox"]:checked::before {
     align-items: center;
     height: 40px;
     padding: 0 20px;
-    position: relative;
+    position: sticky;
     background: var(--primary);
     flex-wrap: wrap;
     top: 0;

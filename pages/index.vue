@@ -16,7 +16,7 @@ const surahClass = (surah) => {
             <div v-if="pending">
                 <Loading />
             </div>
-            <div v-else class="w-100">
+            <div v-else class="w-100 surah-wrapper">
 
                 <div v-for="(surah, index) in data.data" :key="index" class="w-100">
                     <div :class="surahClass(surah)" class="w-100">
@@ -102,12 +102,12 @@ const surahClass = (surah) => {
     width: 100%;
 }
 
+.surah-wrapper {
+    max-width: 730px;
+}
+
 .surah-details {
-    // display: flex;
     margin: 2rem auto;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: flex-start;
     position: relative;
     display: flex;
     width: 100%;
@@ -118,10 +118,9 @@ const surahClass = (surah) => {
         width: 100%;
         flex-direction: row-reverse;
         justify-content: space-between;
+        align-items: center;
 
-        // .right{
-        //     flex: 2;
-        // }
+
         .left {
             display: flex;
             flex-direction: column;
@@ -131,9 +130,7 @@ const surahClass = (surah) => {
     }
 
     .surah-name {
-        // font-family: 'Cairo', sans-serif;
         color: var(--accent);
-        // font-family: 'Amiri', serif;
 
         cursor: pointer;
         text-decoration: none;
@@ -153,14 +150,14 @@ const surahClass = (surah) => {
 h2 {
     font-family: 'ar-ALHAWE_QURAN';
     font-size: 4rem;
-    margin-top: 1rem;
-    // margin-bottom: 1rem;
 
 
     @media (max-width: 500px) {
         font-size: 3rem;
-        margin-top: 3rem;
+    }
 
+    @media (max-width: 400px) {
+        font-size: 2rem;
     }
 }
 </style>
